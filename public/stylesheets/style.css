@@ -1,7 +1,8 @@
 body, html{
   height: 100%;
   width: 100%;
-  margin: 0;
+  margin: 0px;
+  padding: 0;
 }
 
 
@@ -50,4 +51,38 @@ body, html{
   border-style: groove;
   border-width: 10px;
   border-color: rgb(255, 255, 255);
+}
+
+.indexPageMainDiv{
+
+  background-image: url(../images/background/bg4.jpg);
+   height: 100vh;
+   background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center center;
+}
+
+.posts{
+  margin: auto;
+  border: solid 1px red;
+  height:750px ; 
+  background-color: aqua;
+}
+
+
+
+.postInformation{
+  width: 850px;
+  background-color: antiquewhite;
+  height: 420px;
+  overflow: hidden;
+  overflow-y: scroll;
+ 
+}
+
+.commentBox{
+  overflow: hidden;
+  overflow-y: scroll;
+
 }
