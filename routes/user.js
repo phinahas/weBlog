@@ -20,4 +20,8 @@ router.get('/login',(req,res)=>{
 router.get('/home',(req,res)=>{
   res.render('users/user-home')
 })
+
+router.get('/profile',(req,res)=>{
+  res.render('users/user-profile')
+})
 module.exports = router;

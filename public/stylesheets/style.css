@@ -74,7 +74,7 @@ body, html{
 
 .postInformation{
   width: 850px;
-  background-color: antiquewhite;
+  background-color: rgb(225, 215, 250);
   height: 420px;
   overflow: hidden;
   overflow-y: scroll;
@@ -84,5 +84,50 @@ body, html{
 .commentBox{
   overflow: hidden;
   overflow-y: scroll;
+
+}
+
+.profile-details-div{
+  height: 300px;
+  background-color: rgb(181, 228, 228);
+  display: table;
+  margin: 0 auto;
+  padding-top: 20px;
+  
+}
+
+.profile-picture-img-tag{
+  border-radius: 50%;
+  display: table;
+  margin: 0 auto;
+}
+
+.post-profile-page-div{
+  background-color: rgb(179, 108, 15);
+  height: 2000px;
+  padding-left: 20px;
+}
+
+.post-overview{
+  background-color: bisque;
+}
+
+
+.posts-post-overview{
+  
+  height: 350px;
+
+}
+
+.postInformation-post-overview{
+
+  width: 850px;
+  background-color: rgb(189, 97, 150);
+  height: 270px;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+.postBody-post-overview{
 
 }
