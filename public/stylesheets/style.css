@@ -128,6 +128,16 @@ body, html{
   overflow-y: scroll;
 }
 
-.postBody-post-overview{
+.search-bar-main-div{
+  display: flex;
+  justify-content: center;
+}
 
+.search-result-main-body{
+  height: 670px;
+
+}
+.search-result{
+  display: flex
+  
 }

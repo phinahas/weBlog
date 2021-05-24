@@ -21,7 +21,13 @@ router.get('/home',(req,res)=>{
   res.render('users/user-home')
 })
 
+//bloger profile page
 router.get('/profile',(req,res)=>{
   res.render('users/user-profile')
+})
+
+//bloger search
+router.get('/search',(req,res)=>{
+  res.render('users/user-search')
 })
 module.exports = router;
