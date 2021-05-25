@@ -141,3 +141,17 @@ body, html{
   display: flex
   
 }
+
+.add-post-main-div{
+  
+  display: flex;
+  justify-content: center;
+  background-color: rgb(255, 255, 255);
+}
+
+.add-post{
+
+  height: 660px;
+  border: 2px solid black;
+
+}

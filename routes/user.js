@@ -30,4 +30,10 @@ router.get('/profile',(req,res)=>{
 router.get('/search',(req,res)=>{
   res.render('users/user-search')
 })
+
+//add new post
+router.get('/add-post',(req,res)=>{
+  res.render('users/add-post')
+
+})
 module.exports = router;
