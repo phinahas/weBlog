@@ -156,7 +156,12 @@ body, html{
 
 }
 
-.bi-alarm{
-  height: 100px;
-  width: 100px;
+.profile-update{
+  background-color: antiquewhite;
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  border: 1px solid black;
+  height: 500px;
 }

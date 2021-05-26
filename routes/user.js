@@ -40,4 +40,10 @@ router.get('/add-post',(req,res)=>{
 router.get('/view-profile',(req,res)=>{
   res.render('users/view-another-user-profile')
 })
+
+//account settings
+router.get('/account-settings',(req,res)=>{
+  res.render('users/account-settings')
+})
+
 module.exports = router;
