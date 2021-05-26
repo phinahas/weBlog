@@ -34,6 +34,10 @@ router.get('/search',(req,res)=>{
 //add new post
 router.get('/add-post',(req,res)=>{
   res.render('users/add-post')
+})
 
+//see another bloggers profile
+router.get('/view-profile',(req,res)=>{
+  res.render('users/view-another-user-profile')
 })
 module.exports = router;
