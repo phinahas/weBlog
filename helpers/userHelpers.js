@@ -24,5 +24,28 @@ module .exports={
              }
 
              })
+    },
+
+
+
+    login:(userInfo)=>{
+        return new Promise(async (resolve,reject)=>{
+            console.log(userInfo);
+            let user = await db.get().collection(collection.USER).findOne({email:userInfo.email})
+             if(!user){
+                resolve({status:false,statusMessage:"No such user"})
+            }
+            else if(user.password===userInfo.password && user.email===userInfo.email){
+                let userDetailes=user
+                userDetailes.status=true
+                console.log(userDetailes);
+                resolve(user)
+            }
+           
+            else if(user.password!=userInfo.password && user.email===userInfo.email){
+                resolve({status:false,statusMessage:"Password is wrong"})
+            }
+
+        })
     }
 }
