@@ -4,6 +4,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var hbs = require('express-handlebars')//for config partials
+var db = require('./config/database-connection')//database config
+
 
 var userRouter = require('./routes/user');
 const { dirname } = require('path');
@@ -21,6 +23,19 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+//database connection
+db.connect((err,)=>{
+  if(err) 
+  console.log(err);
+  else
+  console.log("Databae connection established........");
+})
+
+
+
+
+//routes
 app.use('/', userRouter);
 
 
