@@ -5,6 +5,8 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var hbs = require('express-handlebars')//for config partials
 var db = require('./config/database-connection')//database config
+var fileUpload = require('express-fileupload')//uploading files
+var session = require('express-session')
 
 
 var userRouter = require('./routes/user');
@@ -17,11 +19,15 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 app.engine('hbs',hbs({extname:'hbs',defaultLayout:'layout',layoutsDir:__dirname+'/views/',partialsDir:__dirname+'/views/partials/'}))
+
+//middlewears
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(fileUpload())//uploading files
+app.use(session({secret:"key",cookie:{maxAge:60000000}}))//session creation
 
 
 //database connection
