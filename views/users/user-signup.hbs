@@ -13,9 +13,12 @@
 
             <div class="col-11 col-md-4  signUpFormDiv pt-3">
                 
-                <form enctype="multipart/form-data" method="" action="#">
+                <form enctype="multipart/form-data" method="POST" action="/signup">
                     <div class="form-group">
+                        <img id="imgVew" src="/images/profile-images/default-dp.png" alt="default-dp" style="border-radius: 50%; height: 50px; width:50px;"><br>
                         <label for="exampleInputEmail1">Email address</label>
+                       
+
                         <input type="email" class="form-control" id="exampleInputEmail1" name="email"
                             aria-describedby="emailHelp" placeholder="Enter email">
                     </div>
@@ -34,11 +37,21 @@
 
                     <div class="form-group">
                         <label for="exampleFormControlFile1">Upload Image</label>
-                        <input type="file" class="form-control-file" name="Image" >
+                        <input type="file" class="form-control-file" name="Image" onchange="viewImage(event)">
                     </div>
-                    <button type="submit" class="btn btn-primary" style="margin: auto;">Create Account</button>
+                    <button type="submit" class="btn btn-primary" style="margin: auto;">Create Account</button><br>
+                    {{#if check.status}}
+                    <label for="" style="background-color: yellow; color: black; font-weight: 500; font-size: larger;">user with same email already exist</label>
+                    {{/if}}
                 </form>
+                           
             </div>
         </div>
     </div>
 </section>
+
+<script>
+    function viewImage(event){
+        document.getElementById('imgVew').src=URL.createObjectURL(event.target.files[0])
+    }
+</script>
