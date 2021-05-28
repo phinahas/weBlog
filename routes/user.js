@@ -32,13 +32,14 @@ router.post('/signup', (req, res) => {
 
   if (req.files) {
     var img = req.files.Image
-    var profileImage = req.body.email + req.files.Image.name;
+    var profileImage = req.body.email
     var userDetailes = req.body;
     userDetailes.profileImage = profileImage
+    console.log(profileImage);
 
-    img.mv('./public/images/profile-images/' + profileImage, (err, done) => {
+    img.mv('./public/images/profile-images/' + profileImage+".jpg", (err, done) => {
       if (!err) {
-
+                console.log(err);
         helpers.createUser(userDetailes).then((response) => {
          // console.log(response);
 
@@ -61,7 +62,7 @@ router.post('/signup', (req, res) => {
 
   else {
     console.log("no image");
-    var profileImage = "default-dp.png"
+    var profileImage = "default-dp"
     var userDetailes = req.body;
     userDetailes.profileImage = profileImage
    // console.log(userDetailes);
@@ -83,6 +84,8 @@ router.post('/signup', (req, res) => {
 /////////////////////////////////////////////////////////END POST METHOD OF SIGNUP/////////////////////////////////////////////
 
 
+
+
 //loginPage
 router.get('/login', (req, res) => {
   if(req.session.loggedIn===true)
@@ -90,13 +93,15 @@ router.get('/login', (req, res) => {
     res.redirect('/home')
   }else{
 
-    console.log(req.session.loginErr);
+    //console.log(req.session.loginErr);
     res.render('users/user-login',{user:false,loginErr:req.session.loginErr,errorMessage:req.session.loginErrMessage})
     req.session.loginErr=false
-    console.log(req.session.errorMessage);
+    //console.log(req.session.errorMessage);
   }
  
 })
+
+
 
 ///////////////////////////////////POST METHOD FOR LOGIN////////////////////////////////////////////////////////
 router.post('/login',(req,res)=>{
@@ -105,23 +110,25 @@ router.post('/login',(req,res)=>{
     if(data.status===true){
       req.session.user=data
       req.session.loggedIn=true
-      console.log(req.session);
+     // console.log(req.session);
       res.redirect('/home');
     }else{
       req.session.loggedIn=false;
       req.session.loginErr=true
       req.session.loginErrMessage=data.statusMessage
-      console.log(req.session);
+      //console.log(req.session);
       res.redirect('/login')
     }
   })
 })
+////////////////////////////END OF POST METHOD FOR LOGIN ////////////////////////
+
 
 
 
 //bloger home page for viewing blogs
 router.get('/home',verifyLogin, (req, res) => {
-  res.render('users/user-home',{user:true})
+  res.render('users/user-home',{user:true,blogger:req.session.user})
 })
 
 //bloger profile page
