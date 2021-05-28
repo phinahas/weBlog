@@ -87,46 +87,19 @@ body, html{
 
 }
 
-.profile-details-div{
-  height: 300px;
-  background-color: rgb(181, 228, 228);
-  display: table;
-  margin: 0 auto;
-  padding-top: 20px;
-  
-}
+.profile-page-post-content{
 
-.profile-picture-img-tag{
-  border-radius: 50%;
-  display: table;
-  margin: 0 auto;
-}
-
-.post-profile-page-div{
-  background-color: rgb(179, 108, 15);
-  height: 2000px;
-  padding-left: 20px;
-}
-
-.post-overview{
-  background-color: bisque;
-}
-
-
-.posts-post-overview{
-  
-  height: 350px;
-
-}
-
-.postInformation-post-overview{
-
-  width: 850px;
-  background-color: rgb(189, 97, 150);
-  height: 270px;
-  overflow: hidden;
   overflow-y: scroll;
+  overflow-x: hidden;
 }
+
+.profile-page-post-content::-webkit-scrollbar{
+  display: none;
+}
+
+
+
+
 
 .search-bar-main-div{
   display: flex;
@@ -142,20 +115,6 @@ body, html{
   
 }
 
-.add-post-main-div{
-  
-  display: flex;
-  justify-content: center;
-  background-color: rgb(255, 255, 255);
-}
-
-.add-post{
-
-  height: 660px;
-  border: 2px solid black;
-
-}
-
 .profile-update{
   background-color: antiquewhite;
   margin-top: 100px;
@@ -164,4 +123,15 @@ body, html{
   justify-content: flex-start;
   border: 1px solid black;
   height: 500px;
+}
+
+.add-post-main-div{
+  margin-top: 100px;
+  
+  display: flex;
+  justify-content: center;
+  
+}
+.add-post{
+  border: 1px solid black;
 }

@@ -1,12 +1,12 @@
 <section>
-    <div class="container" style="background-color: aqua;">
+    <div class="container" style="background-color: rgb(255, 255, 255);">
         <div class="row">
-            <div class="add-post-main-div col-md-12 pt-5 mt-5">
+            <div class="add-post-main-div col-md-12 ">
                 <div class="col-md-8 add-post pt-2">
-                    <form action="">
+                    <form action="/add-post" method="POST">
                         
-                        <input class="w3-input" type="text" placeholder="title"><br>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="20" placeholder="Share your thoughts...."></textarea>
+                        <input class="w3-input" type="text" name="title" placeholder="title"><br>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" name="content" rows="20" placeholder="Share your thoughts...."></textarea>
                         <input type="submit" class="btn btn-primary mt-3 text-center" value="Post">
 
 

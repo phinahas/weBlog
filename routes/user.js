@@ -1,3 +1,4 @@
+const { response } = require('express');
 var express = require('express');
 var helpers = require('../helpers/userHelpers')
 var router = express.Router();
@@ -131,30 +132,93 @@ router.get('/home',verifyLogin, (req, res) => {
   res.render('users/user-home',{user:true,blogger:req.session.user})
 })
 
-//bloger profile page
+
+
+///////////////////////////////bloger profile page////////////////////////////////////
 router.get('/profile', verifyLogin,(req, res) => {
-  res.render('users/user-profile',{user:true})
+
+  helpers.profilePageDetailes(req.session.user._id).then(async(bloggerDetailes)=>{
+    let postCount = bloggerDetailes.postCount;
+    let arrayOfPost=[]
+    if(postCount!=0){
+     arrayOfPost=await helpers.getPosts(req.session.user._id)
+    }
+    console.log(arrayOfPost);
+    console.log(bloggerDetailes);
+    let counts={
+      post:bloggerDetailes.postCount,
+      followers:bloggerDetailes.followersCount,
+      following:bloggerDetailes.followingCount
+    }
+    //console.log(counts);
+    res.render('users/user-profile',{user:true,blogger:req.session.user,profile:bloggerDetailes,arrayOfPosts:arrayOfPost,counts:counts})
+
+  })
+  
 })
+
+
+
+
+
 
 //bloger search
 router.get('/search',verifyLogin, (req, res) => {
   res.render('users/user-search',{user:true})
 })
 
-//add new post
+
+
+
+
+
+
+//button for add new post
 router.get('/add-post',verifyLogin, (req, res) => {
-  res.render('users/add-post',{user:true})
+  res.render('users/add-post',{user:true,blogger:req.session.user})
 })
+
+
+
+///////////////////////////POST METHOD FOR ADDING NEW POST////////////////////////////////////
+
+router.post('/add-post',verifyLogin,(req,res)=>{
+  console.log(req.body);
+  helpers.addNewPost(req.session.user._id,req.body).then(()=>{
+    res.redirect('/profile')
+  })
+})
+/////////////////////////END OF POST METHOD FOR ADDING NEW POST /////////////////////////
+
+
+
+
+
+
+
 
 //see another bloggers profile
 router.get('/view-profile',verifyLogin, (req, res) => {
   res.render('users/view-another-user-profile',{user:true})
 })
 
+
+
+
+
+
+
+
+
+
 //account settings
 router.get('/account-settings',verifyLogin, (req, res) => {
   res.render('users/account-settings',{user:true})
 })
+
+
+
+
 
 
 
