@@ -15,17 +15,17 @@ const verifyLogin = (req, res, next) => {
 }
 
 
-const alreadyExist={}
+const alreadyExist = {}
 
 
 router.get('/', function (req, res, next) {
-  res.render('users/index',{user:false});
+  res.render('users/index', { user: false });
 });
 
 //Page to create a new user
 router.get('/signup', (req, res) => {
-  res.render('users/user-signup',{user:false,check:alreadyExist})
-  alreadyExist.status=false
+  res.render('users/user-signup', { user: false, check: alreadyExist })
+  alreadyExist.status = false
 })
 
 /////////////////////////////////////////post method for signup///////////////////////////////////////////////////////
@@ -38,20 +38,20 @@ router.post('/signup', (req, res) => {
     userDetailes.profileImage = profileImage
     console.log(profileImage);
 
-    img.mv('./public/images/profile-images/' + profileImage+".jpg", (err, done) => {
+    img.mv('./public/images/profile-images/' + profileImage + ".jpg", (err, done) => {
       if (!err) {
-                console.log(err);
+        console.log(err);
         helpers.createUser(userDetailes).then((response) => {
-         // console.log(response);
+          // console.log(response);
 
           if (response.status) {
             res.redirect('/login')
           }
 
           else {
-            alreadyExist.status=true         
-            res.render('users/user-signup',{check:alreadyExist})
-          
+            alreadyExist.status = true
+            res.render('users/user-signup', { check: alreadyExist })
+
           }
 
         })
@@ -66,7 +66,7 @@ router.post('/signup', (req, res) => {
     var profileImage = "default-dp"
     var userDetailes = req.body;
     userDetailes.profileImage = profileImage
-   // console.log(userDetailes);
+    // console.log(userDetailes);
     helpers.createUser(userDetailes).then((response) => {
       //console.log(response);
       if (response.status) {
@@ -75,8 +75,8 @@ router.post('/signup', (req, res) => {
 
       else {
 
-        alreadyExist.status=true         
-        res.render('users/user-signup',{check:alreadyExist}) 
+        alreadyExist.status = true
+        res.render('users/user-signup', { check: alreadyExist })
 
       }
     })
@@ -89,34 +89,33 @@ router.post('/signup', (req, res) => {
 
 //loginPage
 router.get('/login', (req, res) => {
-  if(req.session.loggedIn===true)
-  {
+  if (req.session.loggedIn === true) {
     res.redirect('/home')
-  }else{
+  } else {
 
     //console.log(req.session.loginErr);
-    res.render('users/user-login',{user:false,loginErr:req.session.loginErr,errorMessage:req.session.loginErrMessage})
-    req.session.loginErr=false
+    res.render('users/user-login', { user: false, loginErr: req.session.loginErr, errorMessage: req.session.loginErrMessage })
+    req.session.loginErr = false
     //console.log(req.session.errorMessage);
   }
- 
+
 })
 
 
 
 ///////////////////////////////////POST METHOD FOR LOGIN////////////////////////////////////////////////////////
-router.post('/login',(req,res)=>{
- // console.log(req.body);
-  helpers.login(req.body).then((data)=>{
-    if(data.status===true){
-      req.session.user=data
-      req.session.loggedIn=true
-     // console.log(req.session);
+router.post('/login', (req, res) => {
+  // console.log(req.body);
+  helpers.login(req.body).then((data) => {
+    if (data.status === true) {
+      req.session.user = data
+      req.session.loggedIn = true
+      // console.log(req.session);
       res.redirect('/home');
-    }else{
-      req.session.loggedIn=false;
-      req.session.loginErr=true
-      req.session.loginErrMessage=data.statusMessage
+    } else {
+      req.session.loggedIn = false;
+      req.session.loginErr = true
+      req.session.loginErrMessage = data.statusMessage
       //console.log(req.session);
       res.redirect('/login')
     }
@@ -128,63 +127,129 @@ router.post('/login',(req,res)=>{
 
 
 //bloger home page for viewing blogs
-router.get('/home',verifyLogin, (req, res) => {
-  res.render('users/user-home',{user:true,blogger:req.session.user})
+router.get('/home', verifyLogin, (req, res) => {
+  res.render('users/user-home', { user: true, blogger: req.session.user })
 })
 
 
 
 ///////////////////////////////bloger profile page////////////////////////////////////
-router.get('/profile', verifyLogin,(req, res) => {
+router.get('/profile', verifyLogin, (req, res) => {
 
-  helpers.profilePageDetailes(req.session.user._id).then(async(bloggerDetailes)=>{
+  helpers.profilePageDetailes(req.session.user._id).then(async (bloggerDetailes) => {
     let postCount = bloggerDetailes.postCount;
-    let arrayOfPost=[]
-    if(postCount!=0){
-     arrayOfPost=await helpers.getPosts(req.session.user._id)
+    let arrayOfPost = []
+    if (postCount != 0) {
+      arrayOfPost = await helpers.getPosts(req.session.user._id)
     }
     console.log(arrayOfPost);
     console.log(bloggerDetailes);
-    let counts={
-      post:bloggerDetailes.postCount,
-      followers:bloggerDetailes.followersCount,
-      following:bloggerDetailes.followingCount
+    let counts = {
+      post: bloggerDetailes.postCount,
+      followers: bloggerDetailes.followersCount,
+      following: bloggerDetailes.followingCount
     }
     //console.log(counts);
-    res.render('users/user-profile',{user:true,blogger:req.session.user,profile:bloggerDetailes,arrayOfPosts:arrayOfPost,counts:counts})
+    res.render('users/user-profile', { user: true, blogger: req.session.user, profile: bloggerDetailes, arrayOfPosts: arrayOfPost, counts: counts })
 
   })
-  
+
+})
+////////////////////////////End Blogger Profile/////////////////////////////////////
+
+
+
+
+
+///////////////////////////////bloger search////////////////////////////////
+router.get('/search', verifyLogin, (req, res) => {
+  res.render('users/user-search', { user: true, blogger: req.session.user, notFound: false })
+})
+///////////////////////////End blogger search///////////////////////////////////
+
+
+
+
+
+
+
+
+////////////////////////blogger search post method////////////////////////////////
+
+router.post('/search', (req, res) => {
+  console.log(req.body.searchName);
+  helpers.getBloggers(req.body.searchName).then((result) => {
+    let empty=false;
+    if (result.length === 0) {
+      empty = true;
+    }
+    res.render('users/user-searched-results', { user: true, blogger: req.session.user, notFound: empty,msg:"Helo",results:result })
+
+
+  })
+
 })
 
+///////////////////////////////////End Blog search post method/////////////////////////////
 
 
 
 
 
-//bloger search
-router.get('/search',verifyLogin, (req, res) => {
-  res.render('users/user-search',{user:true})
+
+////////////////View-Profile Searched Blogger//////////////////////////////////////////
+router.get('/view-searched-blogger/:id',(req,res)=>{
+  console.log(req.params.id);
+  let bloggerId = req.params.id;
+  if(bloggerId===req.session.user._id)
+  res.redirect('/profile')
+  else{
+    helpers.getBloggerProfile(bloggerId).then(async(result)=>{
+      let postCount = result.postCount;
+    let arrayOfPost = []
+    if (postCount != 0) {
+      arrayOfPost = await helpers.getPosts(bloggerId)
+    }
+   
+    let counts = {
+      post: result.postCount,
+      followers: result.followersCount,
+      following: result.followingCount
+    }
+
+    
+
+
+      res.render('users/view-another-user-profile', { user: true,blogger:req.session.user,user:result,profile: result, arrayOfPosts: arrayOfPost, counts: counts  })
+
+    })
+  }
+
+
 })
 
+//////////////////////////////////////End View-Profile searched blogger/////////////////////////////////////////////////
 
 
 
 
 
-
-//button for add new post
-router.get('/add-post',verifyLogin, (req, res) => {
-  res.render('users/add-post',{user:true,blogger:req.session.user})
+////////////////////////button for add new post///////////////////////////
+router.get('/add-post', verifyLogin, (req, res) => {
+  res.render('users/add-post', { user: true, blogger: req.session.user })
 })
+////////////////////End of Button for add new post/////////////////////////
+
+
+
 
 
 
 ///////////////////////////POST METHOD FOR ADDING NEW POST////////////////////////////////////
 
-router.post('/add-post',verifyLogin,(req,res)=>{
+router.post('/add-post', verifyLogin, (req, res) => {
   console.log(req.body);
-  helpers.addNewPost(req.session.user._id,req.body).then(()=>{
+  helpers.addNewPost(req.session.user._id, req.body).then(() => {
     res.redirect('/profile')
   })
 })
@@ -196,24 +261,9 @@ router.post('/add-post',verifyLogin,(req,res)=>{
 
 
 
-
-//see another bloggers profile
-router.get('/view-profile',verifyLogin, (req, res) => {
-  res.render('users/view-another-user-profile',{user:true})
-})
-
-
-
-
-
-
-
-
-
-
-//account settings
-router.get('/account-settings',verifyLogin, (req, res) => {
-  res.render('users/account-settings',{user:true})
+/////////////////////////////////////account settings
+router.get('/account-settings', verifyLogin, (req, res) => {
+  res.render('users/account-settings', { user: true })
 })
 
 

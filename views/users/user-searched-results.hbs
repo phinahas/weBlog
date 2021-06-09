@@ -1,0 +1,57 @@
+<section>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 search-bar-main-div"style="margin-top: 100px;">
+                 <div class="col-md-6 search-bar">
+                     <form action="/search" method="POST"> 
+                      <input class="w3-input w3-border w3-round-large" type="text" name="searchName">
+                 </div>
+                 <input type="submit" style="border-radius: 20%; background-color: rgb(168, 171, 173); color: white;" value="Search">
+                 </form>
+            </div>
+        </div>
+     
+
+
+
+      {{#if notFound}}
+        <div class="container" style="background-color: blue;">
+            <div class="row">
+                <div class="col-md-12 search-result-main-body" style="background-color: aliceblue;">
+                    <h1>User Not Found</h1>  
+
+                </div>
+            </div>
+
+        </div>
+        {{/if}}
+
+
+
+        <div class="container" style="background-color: blue;">
+            <div class="row">
+                <div class="col-md-12 search-result-main-body" style="background-color: aliceblue;">
+                   
+                    {{#each results}}
+                   
+                    <div class="search-result pt-5"> 
+                         <img src="/images/profile-images/{{this.profileImage}}.jpg" alt="Avatar" style="width:100px; border-radius: 50%;">
+                         <h3 class="pt-4 ml-2">{{this.username}}</h3>
+                         <a href="/view-searched-blogger/{{this._id}}" class="pl-3 pt-4">View Profile</a>
+                    </div>
+                   {{/each}}
+                     
+
+                </div>
+            </div>
+
+        </div>
+
+
+ 
+
+
+       
+    </div>
+</section>
+

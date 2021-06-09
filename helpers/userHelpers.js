@@ -110,6 +110,32 @@ module .exports={
             resolve(posts)
         })
         
+    },
+
+    getBloggers:(name)=>{
+
+        return new Promise(async(resolve,reject)=>{
+            console.log("name is"+name);
+            let bloggers =  await db.get().collection(collection.USER).find({username:name}).toArray()
+            console.log(bloggers);
+            resolve(bloggers)
+        })
+
+    },
+
+    getBloggerProfile:(bloggerId)=>{
+
+        return new Promise(async(resolve,reect)=>{
+            let user =await db.get().collection(collection.USER).findOne({_id:objectId(bloggerId)})
+            var postCount = (user.post).length;
+            var followersCount=(user.followers).length;
+            var followingCount=(user.following).length;
+            user.postCount=postCount
+            user.followersCount=followersCount
+            user.followingCount=followingCount
+            resolve(user)
+        })
+
     }
 
 
