@@ -117,7 +117,7 @@ module .exports={
         return new Promise(async(resolve,reject)=>{
             console.log("name is"+name);
             let bloggers =  await db.get().collection(collection.USER).find({username:name}).toArray()
-            console.log(bloggers);
+            //console.log(bloggers);
             resolve(bloggers)
         })
 
@@ -136,7 +136,76 @@ module .exports={
             resolve(user)
         })
 
-    }
+    },
+
+    isFollowing:(userId,bloggerId)=>{
+
+          
+        return new Promise(async(resolve,reject)=>{
+
+            let user= await db.get().collection(collection.USER).findOne({_id:objectId(userId)})
+            let following = user.following
+            let status = 0;
+           // console.log(following);
+            for(i=0;i<following.length;i++){
+                //console.log(bloggerId);
+               // console.log(following[i]);
+                following[i]=following[i]+""
+                if( bloggerId===following[i])
+                status=1;
+
+            }
+         // console.log(status);
+            if(status===0)
+                resolve(false)
+            else
+                resolve(true)    
+
+        })
+
+    },
+
+
+    followBlogger:(userId,bloggerId)=>{
+        return new Promise((resolve,reject)=>{
+
+            db.get().collection(collection.USER).updateOne({_id:objectId(userId)},{$push:{"following":objectId(bloggerId)}}).then(()=>{
+
+                db.get().collection(collection.USER).updateOne({_id:objectId(bloggerId)},{$push:{"followers":objectId(userId)}}).then(()=>{
+
+                         resolve()
+                })
+                
+            })
+
+
+
+        })
+    },
+
+    unfollowBlogger:(userId,bloggerId)=>{
+
+
+
+        return new Promise((resolve,reject)=>{
+            console.log("poping");
+
+            db.get().collection(collection.USER).updateOne({_id:objectId(userId)},{$pull:{"following":objectId(bloggerId)}}).then(()=>{
+
+                db.get().collection(collection.USER).updateOne({_id:objectId(bloggerId)},{$pull:{"followers": objectId(userId)}}).then(()=>{
+                    //console.log("done");
+
+                         resolve()
+                })
+                
+            })
+
+
+
+        })
+
+    },
+
 
 
 }

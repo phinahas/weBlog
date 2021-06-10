@@ -42,7 +42,12 @@
 
     <div class="container">
         <div class="row mt-2 col-md-12" style="display: flex; justify-content: center; background-color: antiquewhite;">
-            <a href="" class="btn btn-primary">Follow</a>
+            {{#if isFollowing}}
+            <a href="/unfollow/{{user._id}}" class="btn btn-primary">Unfollow</a>
+            {{else}}
+            <a href="/follow/{{user._id}}" class="btn btn-primary">follow</a>
+            {{/if}}
+
 
         </div>
     </div>

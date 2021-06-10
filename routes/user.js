@@ -22,13 +22,22 @@ router.get('/', function (req, res, next) {
   res.render('users/index', { user: false });
 });
 
-//Page to create a new user
+
+
+
+
+///////////////////////////Page to create a new user/////////////////////////////////////////////////////
 router.get('/signup', (req, res) => {
   res.render('users/user-signup', { user: false, check: alreadyExist })
   alreadyExist.status = false
 })
+/////////////////////////////End Page to create new user/////////////////////////////////////////////////
 
-/////////////////////////////////////////post method for signup///////////////////////////////////////////////////////
+
+
+
+
+//////////////////////////////////////////////////post method for signup///////////////////////////////////////////////////////
 router.post('/signup', (req, res) => {
 
   if (req.files) {
@@ -36,7 +45,7 @@ router.post('/signup', (req, res) => {
     var profileImage = req.body.email
     var userDetailes = req.body;
     userDetailes.profileImage = profileImage
-    console.log(profileImage);
+    //console.log(profileImage);
 
     img.mv('./public/images/profile-images/' + profileImage + ".jpg", (err, done) => {
       if (!err) {
@@ -87,7 +96,11 @@ router.post('/signup', (req, res) => {
 
 
 
-//loginPage
+
+
+
+
+////////////////////////////////////////////////////////loginPage///////////////////////////////////////////////
 router.get('/login', (req, res) => {
   if (req.session.loggedIn === true) {
     res.redirect('/home')
@@ -100,6 +113,14 @@ router.get('/login', (req, res) => {
   }
 
 })
+//////////////////////////////////////////////////////End of login page////////////////////////////////////////
+
+
+
+
+
+
+
 
 
 
@@ -121,15 +142,23 @@ router.post('/login', (req, res) => {
     }
   })
 })
-////////////////////////////END OF POST METHOD FOR LOGIN ////////////////////////
+////////////////////////////END OF POST METHOD FOR LOGIN //////////////////////////////////////////////////////
 
 
 
 
-//bloger home page for viewing blogs
+
+
+
+
+/////////////////////////////////////////////bloger home page for viewing blogs
 router.get('/home', verifyLogin, (req, res) => {
   res.render('users/user-home', { user: true, blogger: req.session.user })
 })
+
+
+
+
 
 
 
@@ -142,8 +171,8 @@ router.get('/profile', verifyLogin, (req, res) => {
     if (postCount != 0) {
       arrayOfPost = await helpers.getPosts(req.session.user._id)
     }
-    console.log(arrayOfPost);
-    console.log(bloggerDetailes);
+   // console.log(arrayOfPost);
+    //console.log(bloggerDetailes);
     let counts = {
       post: bloggerDetailes.postCount,
       followers: bloggerDetailes.followersCount,
@@ -156,6 +185,10 @@ router.get('/profile', verifyLogin, (req, res) => {
 
 })
 ////////////////////////////End Blogger Profile/////////////////////////////////////
+
+
+
+
 
 
 
@@ -199,7 +232,7 @@ router.post('/search', (req, res) => {
 
 ////////////////View-Profile Searched Blogger//////////////////////////////////////////
 router.get('/view-searched-blogger/:id',(req,res)=>{
-  console.log(req.params.id);
+  //console.log(req.params.id);
   let bloggerId = req.params.id;
   if(bloggerId===req.session.user._id)
   res.redirect('/profile')
@@ -217,10 +250,10 @@ router.get('/view-searched-blogger/:id',(req,res)=>{
       following: result.followingCount
     }
 
-    
+    let isFollowing = await helpers.isFollowing(req.session.user._id,bloggerId)
+    //console.log(isFollowing);
 
-
-      res.render('users/view-another-user-profile', { user: true,blogger:req.session.user,user:result,profile: result, arrayOfPosts: arrayOfPost, counts: counts  })
+      res.render('users/view-another-user-profile', { user: true,blogger:req.session.user,user:result,profile: result, arrayOfPosts: arrayOfPost, counts: counts,isFollowing:isFollowing  })
 
     })
   }
@@ -234,11 +267,63 @@ router.get('/view-searched-blogger/:id',(req,res)=>{
 
 
 
+
+
+
+////////////////////////////////Route for follow request////////////////////////////////////////////////////////////
+
+router.get('/follow/:id',(req,res)=>{
+
+  var bloggerId = req.params.id;
+
+  helpers.followBlogger(req.session.user._id,req.params.id).then(()=>{
+
+
+        res.redirect(`/view-searched-blogger/${bloggerId}`)
+  })
+
+})
+
+/////////////////////////////End of router for follow request//////////////////////////////////////////
+
+
+
+
+
+
+
+
+//////////////////////////////Route for unfoloow request////////////////////////////////////////////////
+
+router.get('/unfollow/:id',(req,res)=>{
+
+  var bloggerId = req.params.id;
+
+  helpers.unfollowBlogger(req.session.user._id,req.params.id).then(()=>{
+
+
+        res.redirect(`/view-searched-blogger/${bloggerId}`)
+  })
+
+})
+
+//////////////////////////////End of route for unfoloow request//////////////////////////////////////////////////
+
+
+
+
+
+
+
 ////////////////////////button for add new post///////////////////////////
 router.get('/add-post', verifyLogin, (req, res) => {
   res.render('users/add-post', { user: true, blogger: req.session.user })
 })
 ////////////////////End of Button for add new post/////////////////////////
+
+
+
+
 
 
 
