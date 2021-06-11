@@ -207,5 +207,42 @@ module .exports={
     },
 
 
+    getPostsOfFollowing:(userId)=>{
+        return new Promise(async(resolve,reject)=>{
+
+            const posts=[];
+            let user = await db.get().collection(collection.USER).findOne({_id:objectId(userId)})
+
+            let following = user.following //store the ids of following people by the user
+            //console.log(following);
+
+            for(i=0;i<following.length;i++){
+
+                let followingUser=await db.get().collection(collection.USER).findOne({_id:objectId(following[i])})
+                let name = followingUser.username
+                let profileImage = followingUser.profileImage
+                console.log(name , profileImage);
+                let post = await db.get().collection(collection.POST).find({user:objectId(following[i])}).toArray()
+               // console.log(post);
+                for(j=0;j<post.length;j++){
+                    post[j].name=name
+                    post[j].profileImage=profileImage
+                    posts.push(post[j])
+                }
+                //console.log(post);
+                
+
+            }
+            //posts=posts.reverse()
+            let reversedPosts = posts.reverse()
+           // console.log(reversedPosts);
+            resolve(reversedPosts)
+
+
+
+        })
+    }
+
+
 
 }

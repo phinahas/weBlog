@@ -151,9 +151,19 @@ router.post('/login', (req, res) => {
 
 
 
-/////////////////////////////////////////////bloger home page for viewing blogs
+/////////////////////////////////////////////bloger home page for viewing blogs////////////////////////////////////
 router.get('/home', verifyLogin, (req, res) => {
-  res.render('users/user-home', { user: true, blogger: req.session.user })
+
+  helpers.getPostsOfFollowing(req.session.user._id).then((posts)=>{
+    //console.log("In Users");
+    console.log(posts);
+
+    res.render('users/user-home', { user: true, blogger: req.session.user,posts:posts })
+
+  })
+
+  
+
 })
 
 

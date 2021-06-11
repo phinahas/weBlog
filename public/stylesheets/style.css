@@ -63,29 +63,32 @@ body, html{
   background-position: center center;
 }
 
-.posts{
-  margin: auto;
-  border: solid 1px red;
-  height:750px ; 
-  background-color: aqua;
-}
 
 
 
-.postInformation{
-  width: 850px;
-  background-color: rgb(225, 215, 250);
-  height: 420px;
+
+.post-body{
+  
   overflow: hidden;
   overflow-y: scroll;
  
 }
+.post-body::-webkit-scrollbar{
+  display: none;
+}
 
-.commentBox{
+
+.comment-section{
   overflow: hidden;
   overflow-y: scroll;
 
 }
+.comment-section::-webkit-scrollbar{
+  display: none;
+}
+
+
+
 
 .profile-page-post-content{
 
