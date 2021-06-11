@@ -30,8 +30,8 @@
                 </div>
 
                 <div class="col-md-12 likes" style="background-color: teal; height: 30px; display: flex;">
-                    <span class="material-icons" style="color: white;">thumb_up</span> 
-                    <p style="margin-left: 10px;">{{this.likes}}</p>
+                 <div style="cursor: pointer;"><span class="material-icons" style="color: white;" onclick="addLike('{{this._id}}')">thumb_up</span></div> 
+                    <p style="margin-left: 10px;" id="{{this._id}}">{{this.likes}}</p>
 
                 </div>
 
@@ -45,7 +45,7 @@
                         <input type="text" class="form-control" placeholder="Add Comment..."
                              aria-describedby="basic-addon2" id="commentInput">
                         <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" type="button" >Add</button>
+                            <button class="btn btn-outline-secondary" type="button">Add</button>
                         </div>
 
                     </div>
@@ -64,3 +64,29 @@
 
 
 </section>
+
+<script>
+
+function addLike(id){
+    console.log(id)
+    $.ajax({
+
+        url:'/like-dislike',
+        data:{
+            postId:id
+        },
+        method:'post',
+        success:(response)=>{
+            if(response.status===true){
+                
+                let likes = parseInt(document.getElementById(id).textContent);
+                document.getElementById(id).innerHTML=likes-1;
+            }else if(response.status===false){
+                let likes = parseInt(document.getElementById(id).textContent);
+                document.getElementById(id).innerHTML=likes+1;
+            }
+        }
+    })
+}
+
+</script>

@@ -241,6 +241,50 @@ module .exports={
 
 
         })
+    },
+
+
+    likeOrDislike:(userId,postId)=>{
+        return new Promise(async(resolve,reject)=>{
+            let post =  await db.get().collection(collection.POST).findOne({_id:objectId(postId)})
+            let likedBy = post.likedBy
+            let presentStatus=0
+            console.log(likedBy);
+            let currentLikes = post.likes
+            console.log(currentLikes);
+
+            for(i=0;i<likedBy.length;i++)
+            {
+                likedBy[i]=likedBy[i]+""
+                if(likedBy[i]===userId)
+                {
+                   
+                    presentStatus=1;
+
+                }
+            }
+            
+
+            if(presentStatus===1){
+                await db.get().collection(collection.POST).updateOne({_id:objectId(postId)},{$inc:{'likes':-1}}).then(async()=>{
+                    
+                    await db.get().collection(collection.POST).updateOne({_id:objectId(postId)},{$pull:{"likedBy":objectId(userId)}})
+                    resolve({status:true})
+
+                })
+               
+
+            }else if(presentStatus===0){
+                await db.get().collection(collection.POST).updateOne({_id:objectId(postId)},{$inc:{'likes':1}}).then(async()=>{
+                    
+                    await db.get().collection(collection.POST).updateOne({_id:objectId(postId)},{$push:{"likedBy":objectId(userId)}})
+                    resolve({status:false})
+
+                })
+                
+
+            }
+        })
     }
 
 

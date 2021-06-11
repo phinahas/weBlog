@@ -156,7 +156,7 @@ router.get('/home', verifyLogin, (req, res) => {
 
   helpers.getPostsOfFollowing(req.session.user._id).then((posts)=>{
     //console.log("In Users");
-    console.log(posts);
+   // console.log(posts);
 
     res.render('users/user-home', { user: true, blogger: req.session.user,posts:posts })
 
@@ -164,6 +164,19 @@ router.get('/home', verifyLogin, (req, res) => {
 
   
 
+})
+//////////////////////////////////End blogger home page for viewing blogs/////////////////////////
+
+
+
+
+/////////////////////////////Route for like and dislike//////////////////////////
+router.post('/like-dislike',(req,res)=>{
+  console.log(req.body.postId);
+  helpers.likeOrDislike(req.session.user._id,req.body.postId).then((response)=>{
+    console.log(response);
+    res.json(response)
+  })
 })
 
 
