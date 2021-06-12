@@ -131,7 +131,7 @@ router.post('/login', (req, res) => {
     if (data.status === true) {
       req.session.user = data
       req.session.loggedIn = true
-      // console.log(req.session);
+      // console.log(req.session.user.username);
       res.redirect('/home');
     } else {
       req.session.loggedIn = false;
@@ -170,6 +170,10 @@ router.get('/home', verifyLogin, (req, res) => {
 
 
 
+
+
+
+
 /////////////////////////////Route for like and dislike//////////////////////////
 router.post('/like-dislike',(req,res)=>{
   console.log(req.body.postId);
@@ -178,6 +182,41 @@ router.post('/like-dislike',(req,res)=>{
     res.json(response)
   })
 })
+//////////////////////////////////////End for likes and dislikes/////////////////
+
+
+
+
+
+
+
+////////////////////////////Route for add comment///////////////////////////
+
+router.post('/add-comment',(req,res)=>{
+  //console.log("add-comment");
+ // console.log(req.body.comment);
+ // console.log(req.body.postId);
+ // console.log(req.session.user.username);
+  helpers.addComment(req.session.user,req.body.postId,req.body.comment).then(()=>{
+    res.json({status:true})
+  })
+
+})
+
+///////////////////////////////End of route for add comment//////////////////
+
+
+
+
+/////////////////////Route for viewing commented user//////////////////////////
+
+router.post('/view-commenter-profile',(req,res)=>{
+  console.log(req.body);
+  res.json({id:req.body.userId})
+})
+
+
+
 
 
 

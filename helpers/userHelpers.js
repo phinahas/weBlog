@@ -285,6 +285,30 @@ module .exports={
 
             }
         })
+    },
+
+
+    addComment:(user,postId,comment)=>{
+
+
+      // console.log(user,postId,comment);
+        return new Promise((resolve,reject)=>{
+
+        let commentDetails = {
+            user:user,
+            comment:comment
+        }
+
+        db.get().collection(collection.POST).updateOne({_id:objectId(postId)},{$push:{"comments":commentDetails}}).then(()=>{
+           // console.log("Done");
+            resolve()
+        }
+            )
+
+
+
+
+        })
     }
 
 
