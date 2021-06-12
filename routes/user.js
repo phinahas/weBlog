@@ -208,15 +208,61 @@ router.post('/add-comment',(req,res)=>{
 
 
 
+
+
+
+
 /////////////////////Route for viewing commented user//////////////////////////
 
 router.post('/view-commenter-profile',(req,res)=>{
-  console.log(req.body);
+  //console.log(req.body);
   res.json({id:req.body.userId})
+})
+/////////////////////End for route for viewing commented user//////////////////
+
+
+
+
+
+
+
+
+
+//////////////Route for viewing followers /////////////////////////////////////
+
+router.get('/view-followers/:id',verifyLogin,(req,res)=>{
+
+  helpers.getFollowers(req.params.id).then((response)=>{
+
+    res.render('users/view-followers-following',{user: true, blogger: req.session.user,bloggers:response})
+
+  })  
+  
+})
+////////////////////////////End route for viewing followers/////////////////////
+
+
+
+
+
+
+
+
+/////////////////////Route for viewing following bloggers////////////////////
+
+router.get('/view-following/:id',verifyLogin,(req,res)=>{
+
+  helpers.getFollowing(req.params.id).then((response)=>{
+
+    res.render('users/view-followers-following',{user: true, blogger: req.session.user,bloggers:response})
+
+  })
+
+
 })
 
 
-
+////////////////////End route for viewwing following blogers////////////////
 
 
 
@@ -323,7 +369,7 @@ router.get('/view-searched-blogger/:id',(req,res)=>{
 
 })
 
-//////////////////////////////////////End View-Profile searched blogger/////////////////////////////////////////////////
+//////////////////////////////////////End View-Profile searched blogger////////////////
 
 
 

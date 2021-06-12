@@ -309,7 +309,78 @@ module .exports={
 
 
         })
-    }
+    },
+
+
+    getFollowers:(userId)=>{
+
+        return new Promise(async(resolve,reject)=>{
+
+            let user = await db.get().collection(collection.USER).findOne({_id:objectId(userId)})
+
+            let followersIds = user.followers
+
+            let followersList=[];
+
+            for(i=0;i<followersIds.length;i++){
+
+                let  userFollower = await db.get().collection(collection.USER).findOne({_id:objectId(followersIds[i])})
+
+                let follower = {
+                    id:userFollower._id,
+                    name:userFollower.username,
+                    profileImage:userFollower.profileImage
+                }
+
+                followersList.push(follower)
+
+
+            }
+            console.log(followersList);
+            resolve(followersList)
+            
+
+
+
+        })
+    },
+
+
+    getFollowing:(userId)=>{
+
+        return new Promise(async(resolve,reject)=>{
+
+            let user = await db.get().collection(collection.USER).findOne({_id:objectId(userId)})
+
+            let followingsIds = user.following
+
+            let followingList=[];
+
+            for(i=0;i<followingsIds.length;i++){
+
+                let  userFollowing = await db.get().collection(collection.USER).findOne({_id:objectId(followingsIds[i])})
+
+                let following = {
+                    id:userFollowing._id,
+                    name:userFollowing.username,
+                    profileImage:userFollowing.profileImage
+                }
+
+                followingList.push(following)
+
+
+            }
+            console.log(followingList);
+            resolve(followingList)
+            
+
+
+
+        })
+    },
+
+
+
 
 
 

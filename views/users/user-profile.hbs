@@ -14,16 +14,22 @@
                                 <h2>{{blogger.username}}</h2>
                                 <p>{{blogger.about}}</p>
                             </div>
-                            <div class="col-md-2"
+                           <div class="col-md-2"
                                 style="background-color: rgb(161, 145, 145); height: 100px; display: flex; flex-direction: column;">
+                                 <a href="/view-followers/{{blogger._id}}" style="text-decorations:none; color:inherit;">
                                 <h3>{{counts.followers}}</h3>
                                 <p>Followers</p>
+                                </a>
                             </div>
+                            
                             <div class="col-md-2"
                                 style="background-color: rgb(161, 145, 145); height: 100px; display: flex; flex-direction: column;">
+                                <a href="/view-following/{{blogger._id}}" style="text-decoration: none; color: inherit;">
                                 <h3>{{counts.following}}</h3>
                                 <p>Following</p>
+                                </a>
                             </div>
+                            
                             <div class="col-md-2"
                                 style="background-color: rgb(161, 145, 145); height: 100px; display: flex; flex-direction: column;">
                                 <h3>{{counts.post}}</h3>

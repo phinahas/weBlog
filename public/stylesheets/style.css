@@ -5,6 +5,10 @@ body, html{
   padding: 0;
 }
 
+a {
+  text-decoration: none !important;
+}
+
 
 .signUpPageMainDiv{
   height: 100vh;
