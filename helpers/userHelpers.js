@@ -380,6 +380,32 @@ module .exports={
     },
 
 
+    updateProfile:(user)=>{
+
+        let newuser = {};
+        console.log(user);
+
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collection.USER).findOneAndUpdate({_id:objectId(user.id)},{$set:{
+
+                username:user.username,
+                about:user.about,
+                profileImage:user.profileImage
+                
+
+            }}).then(async ()=>{
+
+                 newuser = await db.get().collection(collection.USER).findOne({_id:objectId(user.id)})
+
+                resolve(newuser)
+                
+            })
+        })
+
+
+    }
+
+
 
 
 
