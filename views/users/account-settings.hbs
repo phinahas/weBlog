@@ -1,9 +1,9 @@
 <section>
-    <div class="container" style="background-color: rgb(217, 232, 245);">
-        <div class="row" style="background-color: aqua;">
+    <div class="container" style="">
+        <div class="row" style="background-color: rgb(250, 250, 250);">
             <div class="profile-update col-10 col-md-7 ml-1">
                 <h2 style="font-family: 'Arvo', serif;">Update Profile</h2>
-                <div class="mt-4" style="background-color:rgb(235, 213, 213)">
+                <div class="mt-4" style="">
                     <form action="/update-profile" method="POST" enctype="multipart/form-data">
                          <img src="/images/profile-images/{{user.profileImage}}.jpg" alt="Avatar" style="height: 100px; width: 100px; border-radius: 50%;" id="imgVew"><br>
                         <input type="file" class="form-control-file" name="Image" onchange="viewImage(event)">

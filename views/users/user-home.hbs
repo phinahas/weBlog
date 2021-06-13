@@ -1,17 +1,17 @@
 <section>
 
 
-    <div class="container" style="background-color: antiquewhite;">
+    <div class="container" style="">
 
 
         <div class="row" style="display: flex; justify-content: center;">
              
              {{#each posts}}
             <div class="col-md-9 post"
-                style="height: 930px; background-color: aqua; margin-top: 100px; margin-bottom: 50px;">
+                style="height: 930px; border: 2px solid black;  margin-top: 100px; margin-bottom: 50px;">
 
                 <div class="col-md-12 header"
-                    style="background-color: aquamarine; height: 50px; display: flex;">
+                    style=" height: 50px; display: flex;">
                     <div style="display: flex;">
                          <a href="/view-searched-blogger/{{this.user}}" style="text-decoration: none; color: inherit;">
                         <img src="/images/profile-images/{{this.profileImage}}.jpg" alt="" style=" height: 50px; width: 50px; border-radius: 50%;">
@@ -28,22 +28,22 @@
 
                 </div>
                 <div class="col-md-12 post-body"
-                    style="background-color: blanchedalmond; height: 600px; padding-top: 20px;">
+                    style="background-color: rgb(236, 242, 241); height: 600px; padding-top: 20px;">
                     <h2>{{this.title}}</h2>
                     <p>{{this.content}}</p>
 
                 </div>
 
-                <div class="col-md-12 likes" style="background-color: teal; height: 30px; display: flex;">
-                 <div style="cursor: pointer;"><span class="material-icons" style="color: white;" onclick="addLike('{{this._id}}')">thumb_up</span></div> 
+                <div class="col-md-12 likes" style="background-color: rgb(238, 244, 245); height: 30px; display: flex;">
+                 <div style="cursor: pointer;"><span class="material-icons" style="color: rgb(158, 156, 156);" onclick="addLike('{{this._id}}')">thumb_up</span></div> 
                     <p style="margin-left: 10px;" id="{{this._id}}">{{this.likes}}</p>
 
                 </div>
 
-                <div class="col-md-12 comment-box" style="background-color: cadetblue; height: 230px;">
-                    <div class="col-md-12 comment-section" style="background-color: aliceblue; height: 180px;">
+                <div class="col-md-12 comment-box" style="background-color: rgb(241, 235, 235); height: 230px;">
+                    <div class="col-md-12 comment-section" style=" height: 180px;">
                         {{#each this.comments}}
-                        <div style="display: flex; cursor: pointer;" onclick="viewCommenter('{{this.user._id}}')">
+                        <div style="display: flex; cursor: pointer;" onclick="viewCommenter('{{this.user.id}}')">
                           <img src="/images/profile-images/{{this.user.profileImage}}.jpg" style="border-radius: 50%; height: 20px; width: 20px; margin-top: 10px;" alt="">  
                           <h4 style="color: brown; cursor: pointer;"  >{{this.user.username}}</h4>
                           </div>
@@ -53,7 +53,7 @@
 
                     </div>
 
-                    <div class="col-md-12 add-comment" style="background-color: wheat; height: 50px; display: flex;">
+                    <div class="col-md-12 add-comment" style=" height: 50px; display: flex;">
                         <input type="text" class="form-control" placeholder="Add Comment..."
                              aria-describedby="basic-addon2" id="commentInput{{this._id}}">
                         <div style="cursor: pointer;" >
@@ -81,7 +81,7 @@
 <script>
 
 function addLike(id){
-    console.log(id)
+   // console.log(id)
     $.ajax({
 
         url:'/like-dislike',
@@ -103,10 +103,10 @@ function addLike(id){
 }
 
 function send(id){
-    console.log("Heloo")
+    //console.log("Heloo")
     let inputFieldId="commentInput"+id
     let comment =  document.getElementById(inputFieldId).value;
-    console.log(comment)
+   // console.log(comment)
 
     $.ajax({
         url:'/add-comment',
@@ -120,7 +120,8 @@ function send(id){
         
         
         document.getElementById(inputFieldId).value="";
-            alert("Comment Added")
+            //alert("Comment Added")
+            location.reload()
         }
 
         }
@@ -130,8 +131,8 @@ function send(id){
 
 function viewCommenter(userId){
 
-    console.log("Heloo")
-    console.log(userId)
+    //console.log("Heloo")
+    //console.log(userId)
 
     $.ajax({
         url:'/view-commenter-profile',
@@ -140,7 +141,7 @@ function viewCommenter(userId){
             userId:userId
         },
         success:(response)=>{
-            console.log(response)
+          //  console.log(response)
               window.location = `/view-searched-blogger/${response.id}`;
         }
 

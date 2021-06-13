@@ -1,13 +1,13 @@
 <section>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12" style="margin-top: 100px; background-color: antiquewhite;">
+            <div class="col-md-12" style="margin-top: 100px;">
                 <div style="display: flex; justify-content: center;">
-                    <div class="col-md-7" style="background-color: aqua; height: 300px;">
+                    <div class="col-md-7" style="background-color: rgb(204, 237, 250); height: 300px;">
                         <div style="display: flex;">
                             <div class="col-md-5"
-                                style="display: flex; flex-direction: column; background-color: beige;">
-                                <div style="background-color: cornflowerblue;">
+                                style="display: flex; flex-direction: column;">
+                                <div style="">
                                     <img src="/images/profile-images/{{user.profileImage}}.jpg" alt="Avatar"
                                         style="height: 180px; width: 180px; border-radius: 50%;">
                                 </div>
@@ -15,21 +15,21 @@
                                 <p>{{user.about}}</p>
                             </div>
                             <div class="col-md-2"
-                                style="background-color: rgb(161, 145, 145); height: 100px; display: flex; flex-direction: column;">
+                                style=" height: 100px; display: flex; flex-direction: column;">
                                 <a href="/view-followers/{{user._id}}" style="text-decoration: none; color: inherit;">
                                 <h3>{{counts.followers}}</h3>
                                 <p>Followers</p>
                                 </a>
                             </div>
                             <div class="col-md-2"
-                                style="background-color: rgb(161, 145, 145); height: 100px; display: flex; flex-direction: column;">
+                                style=" height: 100px; display: flex; flex-direction: column;">
                                 <a href="/view-following/{{user._id}}" style="text-decoration: none; color: inherit;">
                                 <h3>{{counts.following}}</h3>
                                 <p>Following</p>
                                 </a>
                             </div>
                             <div class="col-md-2"
-                                style="background-color: rgb(161, 145, 145); height: 100px; display: flex; flex-direction: column;">
+                                style=" height: 100px; display: flex; flex-direction: column;">
                                 <h3>{{counts.post}}</h3>
                                 <p>Post</p>
                             </div>
@@ -45,7 +45,7 @@
     </div>
 
     <div class="container">
-        <div class="row mt-2 col-md-12" style="display: flex; justify-content: center; background-color: antiquewhite;">
+        <div class="row mt-2 col-md-12" style="display: flex; justify-content: center;">
             {{#if isFollowing}}
             <a href="/unfollow/{{user._id}}" class="btn btn-primary">Unfollow</a>
             {{else}}
@@ -57,19 +57,19 @@
     </div>
 
 
-    <div class="container-fluid mt-2 pb-2 pt-2" style="background-color: antiquewhite;">
+    <div class="container-fluid mt-2 pb-2 pt-2" style="background-color: rgb(255, 255, 255);">
 
         <div class="row ml-1">
             {{#if arrayOfPosts}}
             {{#each arrayOfPosts}}
            
-            <div class="col-md-3 ml-1" style="background-color: aqua; ">
+            <div class="col-md-3 ml-1" style="border: 2px solid rgb(61, 63, 62); ">
                 <div class="col-md-12 header"
-                    style="background-color: aquamarine; height: 50px; display: flex; justify-content: space-between;">
+                    style=" background-color: rgb(209, 209, 209); height: 50px; display: flex; justify-content: space-between;">
                     <h4>{{this.name}}</h4>
                     <h4>{{this.time}}</h4>
                 </div>
-                <div class="col-md-12 profile-page-post-content" style="height: 238px; background-color: blueviolet;">
+                <div class="col-md-12 profile-page-post-content" style="height: 238px; background-color: rgb(243, 241, 243);">
                     <h4>{{this.title}}</h4>
                     <p>{{this.content}}</p>
                 </div>
