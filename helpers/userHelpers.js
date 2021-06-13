@@ -227,6 +227,25 @@ module .exports={
                 for(j=0;j<post.length;j++){
                     post[j].name=name
                     post[j].profileImage=profileImage
+                    if(post[j].comments!=null){
+                        console.log(post[j].comments.length);
+                        for(x=0;x<post[j].comments.length;x++){
+                            console.log(post[j].comments[x].user);
+                            let id =post[j].comments[x].user
+                            console.log(id);
+                         let commentedUserDetailes  = await db.get().collection(collection.USER).findOne({_id:objectId(id)})
+                         let commentedUser={
+                             username:commentedUserDetailes.username,
+                             id:commentedUserDetailes._id,
+                             profileImage:commentedUserDetailes.profileImage
+                         }
+                           post[j].comments[x].user=commentedUser
+                        }
+                        
+                    console.log(post[j].comments);
+
+                    }
+                    
                     posts.push(post[j])
                 }
                 //console.log(post);
@@ -235,7 +254,7 @@ module .exports={
             }
             //posts=posts.reverse()
             let reversedPosts = posts.reverse()
-           // console.log(reversedPosts);
+            //console.log(reversedPosts);
             resolve(reversedPosts)
 
 
@@ -295,7 +314,7 @@ module .exports={
         return new Promise((resolve,reject)=>{
 
         let commentDetails = {
-            user:user,
+            user:user._id,
             comment:comment
         }
 
@@ -409,7 +428,26 @@ module .exports={
 
       return new Promise((resolve,reject)=>{
 
-        db.get().collection(collection.POST).findOne({_id:objectId(id)}).then((post)=>{
+        db.get().collection(collection.POST).findOne({_id:objectId(id)}).then(async(post)=>{
+
+            if(post.comments!=null){
+                
+                        for(x=0;x<post.comments.length;x++){
+                           // console.log(postcomments[x].user);
+                            let id =post.comments[x].user
+                            console.log(id);
+                         let commentedUserDetailes  = await db.get().collection(collection.USER).findOne({_id:objectId(id)})
+                         let commentedUser={
+                             username:commentedUserDetailes.username,
+                             id:commentedUserDetailes._id,
+                             profileImage:commentedUserDetailes.profileImage
+                         }
+                           post.comments[x].user=commentedUser
+                        }
+
+             
+
+            }
             resolve(post)
         })
 
