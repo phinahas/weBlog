@@ -106,7 +106,7 @@ module .exports={
             }
            
            // console.log("posts");
-            //console.log(posts);
+           // console.log(posts);
             resolve(posts)
         })
         
@@ -188,7 +188,7 @@ module .exports={
 
 
         return new Promise((resolve,reject)=>{
-            console.log("poping");
+            //console.log("poping");
 
             db.get().collection(collection.USER).updateOne({_id:objectId(userId)},{$pull:{"following":objectId(bloggerId)}}).then(()=>{
 
@@ -221,18 +221,18 @@ module .exports={
                 let followingUser=await db.get().collection(collection.USER).findOne({_id:objectId(following[i])})
                 let name = followingUser.username
                 let profileImage = followingUser.profileImage
-                console.log(name , profileImage);
+               // console.log(name , profileImage);
                 let post = await db.get().collection(collection.POST).find({user:objectId(following[i])}).toArray()
                // console.log(post);
                 for(j=0;j<post.length;j++){
                     post[j].name=name
                     post[j].profileImage=profileImage
                     if(post[j].comments!=null){
-                        console.log(post[j].comments.length);
+                       // console.log(post[j].comments.length);
                         for(x=0;x<post[j].comments.length;x++){
-                            console.log(post[j].comments[x].user);
+                           // console.log(post[j].comments[x].user);
                             let id =post[j].comments[x].user
-                            console.log(id);
+                          //  console.log(id);
                          let commentedUserDetailes  = await db.get().collection(collection.USER).findOne({_id:objectId(id)})
                          let commentedUser={
                              username:commentedUserDetailes.username,
@@ -242,7 +242,7 @@ module .exports={
                            post[j].comments[x].user=commentedUser
                         }
                         
-                    console.log(post[j].comments);
+                   // console.log(post[j].comments);
 
                     }
                     
@@ -268,9 +268,9 @@ module .exports={
             let post =  await db.get().collection(collection.POST).findOne({_id:objectId(postId)})
             let likedBy = post.likedBy
             let presentStatus=0
-            console.log(likedBy);
+           // console.log(likedBy);
             let currentLikes = post.likes
-            console.log(currentLikes);
+           // console.log(currentLikes);
 
             for(i=0;i<likedBy.length;i++)
             {
@@ -355,7 +355,7 @@ module .exports={
 
 
             }
-            console.log(followersList);
+           // console.log(followersList);
             resolve(followersList)
             
 
@@ -389,7 +389,7 @@ module .exports={
 
 
             }
-            console.log(followingList);
+           // console.log(followingList);
             resolve(followingList)
             
 
@@ -402,7 +402,7 @@ module .exports={
     updateProfile:(user)=>{
 
         let newuser = {};
-        console.log(user);
+      //  console.log(user);
 
         return new Promise((resolve,reject)=>{
             db.get().collection(collection.USER).findOneAndUpdate({_id:objectId(user.id)},{$set:{

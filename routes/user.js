@@ -340,7 +340,7 @@ router.post('/search', (req, res) => {
 
 ////////////////View-Profile Searched Blogger//////////////////////////////////////////
 router.get('/view-searched-blogger/:id', (req, res) => {
-  //console.log(req.params.id);
+  console.log(req.params.id);
   let bloggerId = req.params.id;
   if (bloggerId === req.session.user._id)
     res.redirect('/profile')
