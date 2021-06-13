@@ -403,6 +403,19 @@ module .exports={
         })
 
 
+    },
+
+    getSelectedPost:(id)=>{
+
+      return new Promise((resolve,reject)=>{
+
+        db.get().collection(collection.POST).findOne({_id:objectId(id)}).then((post)=>{
+            resolve(post)
+        })
+
+      })
+
+
     }
 
 

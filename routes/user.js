@@ -518,6 +518,25 @@ router.post('/update-profile', (req, res) => {
 
   })
 
+////////////////////////////////////End Route for Post method for update profile////////////
+
+
+
+
+
+
+
+////////////////////////////////////////Route for viewing seleced post//////////////////////
+
+router.get('/view-selected-post/:id',verifyLogin,(req,res)=>{
+
+  //console.log(req.params.id);
+  helpers.getSelectedPost(req.params.id).then((post)=>{
+    //console.log(post);
+    res.render('users/view-selected-post', { user: true, blogger: req.session.user, post: post })
+  })
+
+})
 
 
 

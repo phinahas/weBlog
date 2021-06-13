@@ -1,0 +1,152 @@
+<section>
+
+
+    <div class="container" style="background-color: antiquewhite;">
+
+
+        <div class="row" style="display: flex; justify-content: center;">
+             
+             
+            <div class="col-md-9 post"
+                style="height: 930px; background-color: aqua; margin-top: 100px; margin-bottom: 50px;">
+
+                <div class="col-md-12 header"
+                    style="background-color: aquamarine; height: 50px; display: flex;">
+                    <div style="display: flex;">
+                        <img src="/images/profile-images/{{this.profileImage}}.jpg" alt="" style="border-radius: 50%;">
+                        <p style="margin-top: 11px;">{{post.name}}</p>
+                        <p style="margin-top: 11px; margin-left: 15px; color: brown;">{{post.time}}</p>
+                    </div>
+                    
+                    
+                    
+
+                </div>
+                <div class="col-md-12 post-body"
+                    style="background-color: blanchedalmond; height: 600px; padding-top: 20px;">
+                    <h2>{{post.title}}</h2>
+                    <p>{{post.content}}</p>
+
+                </div>
+
+                <div class="col-md-12 likes" style="background-color: teal; height: 30px; display: flex;">
+                 <div style="cursor: pointer;"><span class="material-icons" style="color: white;" onclick="addLike('{{post._id}}')">thumb_up</span></div> 
+                    <p style="margin-left: 10px;" id="{{post._id}}">{{post.likes}}</p>
+
+                </div>
+
+                <div class="col-md-12 comment-box" style="background-color: cadetblue; height: 230px;">
+                    <div class="col-md-12 comment-section" style="background-color: aliceblue; height: 180px;">
+                        {{#each post.comments}}
+                        <div style="display: flex; cursor: pointer;" onclick="viewCommenter('{{this.user._id}}')">
+                          <img src="/images/profile-images/{{this.user.profileImage}}.jpg" style="border-radius: 50%; height: 20px; width: 20px; margin-top: 10px;" alt="">  
+                          <h4 style="color: brown; cursor: pointer;"  >{{this.user.username}}</h4>
+                          </div>
+                          <p>{{this.comment}}</p>
+                        {{/each}}  
+
+
+                    </div>
+
+                    <div class="col-md-12 add-comment" style="background-color: wheat; height: 50px; display: flex;">
+                        <input type="text" class="form-control" placeholder="Add Comment..."
+                             aria-describedby="basic-addon2" id="commentInput{{post._id}}">
+                        <div style="cursor: pointer;" >
+                            <span class="material-icons" style="height: 10px; width: 20px; margin-top: 10px;" onclick="send('{{post._id}}')">send</span>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+            
+
+
+        </div>
+
+    </div>
+
+
+</section>
+
+
+<script>
+
+function addLike(id){
+    console.log("Add Like IDSLIKE")
+    console.log(id)
+    $.ajax({
+
+        url:'/like-dislike',
+        data:{
+            postId:id
+        },
+        method:'post',
+        success:(response)=>{
+            if(response.status===true){
+                
+                let likes = parseInt(document.getElementById(id).textContent);
+                document.getElementById(id).innerHTML=likes-1;
+            }else if(response.status===false){
+                let likes = parseInt(document.getElementById(id).textContent);
+                document.getElementById(id).innerHTML=likes+1;
+            }
+        }
+    })
+}
+
+function send(id){
+    console.log("Heloo")
+    let inputFieldId="commentInput"+id
+    let comment =  document.getElementById(inputFieldId).value;
+    console.log(comment)
+
+    $.ajax({
+        url:'/add-comment',
+        data:{
+            comment:comment,
+            postId:id
+        },
+        method:'post',
+        success:(response)=>{
+        if(response.status===true){
+        
+        
+        document.getElementById(inputFieldId).value="";
+            alert("Comment Added")
+        }
+
+        }
+    })
+}
+
+
+function viewCommenter(userId){
+
+    console.log("Heloo")
+    console.log(userId)
+
+    $.ajax({
+        url:'/view-commenter-profile',
+        method:'post',
+        data:{
+            userId:userId
+        },
+        success:(response)=>{
+            console.log(response)
+              window.location = `/view-searched-blogger/${response.id}`;
+        }
+
+    })
+    
+}
+
+
+
+ 
+
+</script>
